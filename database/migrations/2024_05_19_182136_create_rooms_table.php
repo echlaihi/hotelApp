@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("type");
             $table->boolean("is_available");
             $table->integer("price");
-            $table->string("conforts")
+            $table->string("conforts");
         });
     }
 
