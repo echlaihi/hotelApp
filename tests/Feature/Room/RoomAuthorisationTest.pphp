@@ -1,0 +1,34 @@
+<?php
+
+namespace Tests\Feature\Room;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+
+class RoomAuthorisationTest extends TestCase
+{
+    
+    public function setUp() 
+    {
+        $this->withoutExceptionHandling();
+    }
+
+    public function test_non_admin_user_cannot_create_new_room()
+    {
+
+    }
+
+    public function test_non_admin_user_cannot_update_room()
+    {
+
+    }
+
+
+    public function test_non_admin_user_cannot_delete_room()
+    {
+
+    }
+
+    
+}
