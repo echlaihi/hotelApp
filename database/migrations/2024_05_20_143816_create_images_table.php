@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("type");
+            $table->boolean("is_initial");
             $table->foreignId("room_id")->references("id")->on("rooms");
             $table->timestamps();
         });

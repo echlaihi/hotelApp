@@ -29,6 +29,7 @@ class UserFactory extends Factory
             'cin' => 'ib33343',
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'is_admin' => false,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];

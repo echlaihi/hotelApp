@@ -22,6 +22,7 @@ class User extends Authenticatable
         'cin',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**

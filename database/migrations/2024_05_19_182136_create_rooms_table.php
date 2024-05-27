@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string("type");
-            $table->boolean("is_available");
+            $table->boolean("is_available")->default(true);
             $table->integer("price");
             $table->string("conforts");
         });
