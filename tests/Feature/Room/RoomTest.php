@@ -17,33 +17,6 @@ class RoomTest extends TestCase
 
     use RefreshDatabase;
 
-    public function authenticateAdmin()
-    {
-        $user = [
-            'first_name' => 'admin first',
-            'last_name'  => 'admin last',
-            'email'      => 'admin@email.com',
-            'is_admin'   => true,
-            'cin'        => 'ib343',
-            'email_verified_at' => now(),
-            'password' => 'password',
-            'remember_token' => 'sdfad', 
-        ];
-
-        $user = User::create($user);
-
-        $response = $this->actingAs($user);
-        $response->assertAuthenticated();
-        return $response;
-    }
-
-    public function authenticateUser()
-    {
-        $user = User::factory()->create();
-        $response = $this->actingAs($user);
-        $response->assertAuthenticated();
-        return $response;
-    }
 
 
     public function setUp() : void
@@ -118,6 +91,8 @@ class RoomTest extends TestCase
 
     public function test_admin_can_delete_a_room_with_images()
     {
+
+
         $response = $this->authenticateAdmin();
         $room = Room::factory()->make()->toArray();
         $room['image1'] = UploadedFile::fake()->image("initial.jpg", 1000, 900)->size(2000);

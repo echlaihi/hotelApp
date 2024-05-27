@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\MessageController;
 use App\Http\Middleware\checkAdminMiddlware;
 use App\Models\Room;
 
@@ -21,7 +22,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-/// Chambre routes
+/// Rooms routes
 Route::get('/', [RoomController::class, 'index'])->name('room.index');
 Route::get('/room/{id}', [RoomController::class, 'show'])->name('room.show');
 
@@ -33,3 +34,6 @@ Route::post('/dashboard/room/store', [Roomcontroller::class, 'store'])->middlewa
 
 Route::delete('/dashboard/room/delete/{room}', [RoomController::class, 'delete'])->middleware(['auth', checkAdminMiddlware::class])->name('room.delete');
 require __DIR__.'/auth.php';
+
+// Messages routes
+Route::post('/message/send', [MessageController::class, 'send'])->name('message.send');
