@@ -1,0 +1,43 @@
+.wrapper{
+    width: 98%;
+    max-width: 1000px;
+    padding: 0 1%;
+    margin: 0 auto;
+}
+
+html,
+body{ 
+    background-color: $light_brown;
+    min-height: 100%;
+}
+
+footer{
+    margin-bottom: 0;
+}
+
+h1{ 
+    padding: 4rem 1rem;
+    // border: 1px solid red;
+    margin-top: 5rem;
+    text-align: center;
+    font-size: 3rem;
+    color: $dark_gray;
+    display: block;
+    letter-spacing: .2rem;
+   
+    &:before{
+        content: "";
+        
+        margin: 4rem auto;
+        margin-top: 0;
+        display: block;
+        width: 70%;
+        border-top: 2px solid $dark_gray;
+    }
+
+  
+}
+
+section{
+    // border-top: 2px solid $dark_gray;
+}

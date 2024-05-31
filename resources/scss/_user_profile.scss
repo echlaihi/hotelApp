@@ -1,0 +1,72 @@
+main#dashboard{
+	min-height: 95vh;
+	padding-top:6rem;
+	// width: fit-content;
+	.wrapper{
+		display: flex;
+		flex-wrap: wrap;
+		 min-width: 1500px;
+	}
+
+}
+
+.container{
+	display: flex;
+	flex-wrap: wrap;
+	width: 70%;
+}
+
+section{
+	width: 100%;
+	margin-top: 2rem;
+}
+
+
+h2{
+	padding: 1rem;
+	text-transform: uppercase;
+	letter-spacing: .2rem;
+	color: $dark_gray;
+}
+
+aside {
+	border: 1px solid red;
+	padding: 1rem;
+	font-size: 1.2rem;
+	width: 20%;
+	height: fit-content;
+	margin: 1rem;
+	border: 1px solid $dark_gray;
+	color: $dark_gray;
+
+	h3{
+
+		padding: 1rem;
+		margin: 0;
+
+	}
+
+	ul {
+
+		li {
+
+			a{
+				display: block;
+				padding: .4rem ;
+			}
+		}
+	}
+
+	input{
+		padding: .6rem;
+		font-size: 1.2rem;
+		width: 100%;
+
+	}
+
+}
+
+section{
+
+}
+
