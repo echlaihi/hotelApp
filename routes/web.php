@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Middleware\checkAdminMiddlware;
 use App\Models\Room;
 
@@ -37,3 +38,8 @@ require __DIR__.'/auth.php';
 
 // Messages routes
 Route::post('/message/send', [MessageController::class, 'send'])->name('message.send');
+
+// Reservation routes
+Route::post('/rooms/reservation/{room}', [ReservationController::class, 'make'])->middleware(['auth'])->name("reservation.make");
+
+Route::get('/dashboard/reservations', [ReservationController::class, "index"])->middleware(['auth', checkAdminMiddlware::class])->name("reservation.index");
