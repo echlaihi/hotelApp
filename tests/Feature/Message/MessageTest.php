@@ -67,11 +67,4 @@ class MessageTest extends TestCase
    }
 
 
-   // public function test_regular_user_cannot_message_regular_user()
-   // {
-   //      $user = User::factory()->create()->toArray();
-   //      $response = $this->actingAs($user);
-   //      $response->assertAuthenticated();
-   // }
-
 }
