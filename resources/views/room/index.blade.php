@@ -15,7 +15,7 @@
                             <img src="images/room2.jpg" alt="">
                                 <div class="meta">
                                     <p>chambre pour 2 personne</p>
-                                        <a href="#">voir details</a>
+                                        <a href="{{ route('room.show', $room->id) }}">voir details</a>
                                 </div>
                         </div>
                     @endforeach

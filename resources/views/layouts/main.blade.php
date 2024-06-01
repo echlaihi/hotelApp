@@ -42,6 +42,7 @@
 
       @yield("content")
 
+    </main>
     <footer>
         <div class="wrapper">        <p>abdelghani echlaihi &copy; right 2024,All right reserved</p>
         </div>

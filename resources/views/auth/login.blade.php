@@ -1,4 +1,4 @@
-<x-guest-layout>
+{{-- <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -45,3 +45,42 @@
         </div>
     </form>
 </x-guest-layout>
+
+--}}
+
+@extends('layouts.main')
+
+@section("content")
+
+
+    <section id="login">
+
+        <div class="wrapper">
+                    <h1>Login</h1>
+            <form action="{{ route('login') }}" method="post"> 
+                @csrf
+
+                <fieldset>
+                    @error("email")
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <label>Votre email: </label>
+                    <input type="email" name="email">
+                </fieldset>
+
+                <fieldset>
+                    <label>Votre mot de passe: </label>
+                    <input type="password" name="password" id="">
+                </fieldset>
+
+                <fieldset>
+                    <button type="submit" name="submit">Login</button>
+                </fieldset>
+
+            </form>
+
+        </div>
+    
+        
+   </section>
+@endsection

@@ -1,4 +1,4 @@
-<x-guest-layout>
+{{-- <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -50,3 +50,95 @@
         </div>
     </form>
 </x-guest-layout>
+
+--}}
+
+
+@extends('layouts.main')
+
+@section("content")
+
+<style type="text/css">
+    /*fieldset{
+        display: flex;
+    }
+
+    label{
+        width: 40% !important;
+        border: 1px solid red;
+        display: flex;
+    }
+
+    input{
+        width: 60%;
+    }*/
+</style>
+
+    <section id="login">
+
+        <div class="wrapper">
+                    <h1>S'inscrir</h1>
+
+            <form  id="registerForm" action="{{ route('register') }}" method="POST"> 
+                @csrf
+
+                <fieldset>
+                    @error("first_name")
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <label>Votre Prenom: </label>
+                    <input type="text" name="first_name">
+                </fieldset>
+
+                  <fieldset>
+
+                    @error("last_name")
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <label>Votre Nom: </label>
+                    <input type="text" name="last_name">
+                </fieldset>
+
+                  <fieldset>
+
+                    @error("cin")
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <label>Votre cin: </label>
+                    <input type="text" name="cin">
+                </fieldset>
+
+                  <fieldset>
+
+                    @error("email")
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <label for="email">Votre email: </label>
+                    <input type="email" name="email">
+                </fieldset>
+
+
+                <fieldset>
+                    @error("password")
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <label for="message">Votre mot de passe: </label>
+                    <input type="password" name="password" id="">
+                </fieldset>
+
+                <fieldset>
+                    <label>Confirmer votre mot de passe</label>
+                    <input type="password" name="password_confirmation">
+                </fieldset>
+
+
+                <fieldset>
+                    <button type="submit" onclick="document.querySelector('#registerForm').submit()" name="submit">S'inscrir</button>
+                </fieldset>              
+            </form>
+
+        </div>
+    
+        
+   </section>
+@endsection

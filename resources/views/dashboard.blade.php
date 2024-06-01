@@ -1,4 +1,5 @@
-<x-app-layout>
+{{--
+    <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
@@ -15,3 +16,27 @@
         </div>
     </div>
 </x-app-layout>
+
+ --}}
+
+ @extends("layouts.main")
+
+ @section("content")
+
+    <main id="dashboard">
+
+        <div class="wrapper">
+                
+                 @include("profile.aside")
+
+
+                  <div class="container"></div>
+
+        </div>
+
+
+
+    </main>
+
+
+ @endsection
