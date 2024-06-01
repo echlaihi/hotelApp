@@ -123,9 +123,4 @@ class RoomTest extends TestCase
         $response->assertStatus(404);
     }
 
-
-    
-
-
-
 }

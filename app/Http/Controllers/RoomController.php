@@ -26,9 +26,8 @@ class RoomController extends Controller
         return view("dashboard.rooms")->with("rooms", $rooms);
     }
 
-    public function show($id)
+    public function show(Room $room)
     {
-        $room = Room::find($id);
         return view("room.show")->with("room", $room);
     }
 
@@ -69,14 +68,13 @@ class RoomController extends Controller
         $images_to_insert = [];
 
          for ($i = 0; $i < count($images); $i++){
-            $images_to_insert[$i]  = [];
-            $images_to_insert[$i]['extension'] = $images[$i]->getClientOriginalExtension();
-            $images_to_insert[$i]['name'] = Str::uuid() .'.' . $images_to_insert[$i]['extension'] ;
+           
             $images_to_insert[$i]['is_initial'] = false;
-            $images_to_insert[$i]['room_id']  =  $room->id;     
+            $images_to_insert[$i]['room_id']  =  $room->id;    
 
-            // storing the image 
-            Storage::disk('public')->put($images_to_insert[$i]['name'], $images[$i]);
+            // storing the images
+            $images_to_insert[$i]["name"] = Storage::disk('public')->put('/', $images[$i]);
+
         }
 
         $images_to_insert[0]['is_initial'] = true;
