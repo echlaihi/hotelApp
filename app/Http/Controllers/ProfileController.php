@@ -16,8 +16,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        if (Auth::user()->is_admin) {
+            return view('admin.dashboard.profile.edit')->with(['user' => Auth::user()]);
+        }
+
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => Auth::user(),
         ]);
     }
 
@@ -28,6 +32,7 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
+        
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }

@@ -58,22 +58,6 @@
 
 @section("content")
 
-<style type="text/css">
-    /*fieldset{
-        display: flex;
-    }
-
-    label{
-        width: 40% !important;
-        border: 1px solid red;
-        display: flex;
-    }
-
-    input{
-        width: 60%;
-    }*/
-</style>
-
     <section id="login">
 
         <div class="wrapper">
@@ -87,7 +71,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     <label>Votre Prenom: </label>
-                    <input type="text" name="first_name">
+                    <input type="text" name="first_name" value="{{ old('first_name') }}">
                 </fieldset>
 
                   <fieldset>
@@ -96,7 +80,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     <label>Votre Nom: </label>
-                    <input type="text" name="last_name">
+                    <input type="text" name="last_name" value="{{ old('last_name') }}">
                 </fieldset>
 
                   <fieldset>
@@ -105,7 +89,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     <label>Votre cin: </label>
-                    <input type="text" name="cin">
+                    <input type="text" name="cin" value="{{old('cin') }}">
                 </fieldset>
 
                   <fieldset>
@@ -114,7 +98,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     <label for="email">Votre email: </label>
-                    <input type="email" name="email">
+                    <input type="email" name="email" value="{{ old('email') }}">
                 </fieldset>
 
 
@@ -133,7 +117,7 @@
 
 
                 <fieldset>
-                    <button type="submit" onclick="document.querySelector('#registerForm').submit()" name="submit">S'inscrir</button>
+                    <button type="submit"name="submit">S'inscrir</button>
                 </fieldset>              
             </form>
 
