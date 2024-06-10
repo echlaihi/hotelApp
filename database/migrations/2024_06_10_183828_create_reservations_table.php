@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->references("id")->on("users");
+            $table->foreignId("partner_id")->references("id")->on("partners");
             $table->foreignId("room_id")->references("id")->on("rooms");
             $table->string("status"); // active, ready, disactive, terminate
             $table->date("start_date");
