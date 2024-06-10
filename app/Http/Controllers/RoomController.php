@@ -16,19 +16,29 @@ class RoomController extends Controller
     public function index()
     {
         $rooms = Room::all();
+        foreach ($rooms as $room) {
+            $room->initial_image = $room->images()->where("is_initial", true)->get()[0];
+        }
         return view("room.index")->with("rooms", $rooms);
 
     }
 
     public function getAll()
     {
-        $rooms = Room::all();
-        return view("dashboard.rooms")->with("rooms", $rooms);
+        $rooms = Room::paginate(6);
+        return view("admin.dashboard.rooms")->with("rooms", $rooms);
     }
 
     public function show(Room $room)
     {
-        return view("room.show")->with("room", $room);
+        $initial_image = $room->images()->where("is_initial", true)->get()[0];
+        $images = $room->images()->where("is_initial", false)->get();
+
+        return view("room.show")->with([
+            "room" => $room,
+            "initial_image" => $initial_image,
+            "images" => $images
+        ]);
     }
 
     public function create()
@@ -38,10 +48,11 @@ class RoomController extends Controller
 
     public function store(Request $request) 
     {
+        
+
         $validated_data  = $request->validate([
             'type' => 'required|max:10',
             'price'=> 'required|integer',
-            'is_available' => 'required|boolean',
             'conforts' => 'required',
             'image1' => 'required|file|mimes:jpeg,png,jpg|max:2000',
             'image2' => 'nullable|file|mimes:jpeg,png,jpg|max:2000',
@@ -51,8 +62,6 @@ class RoomController extends Controller
         ]);
 
         $room = Room::create($validated_data);
-
-
 
         $images = array();
 
@@ -73,7 +82,7 @@ class RoomController extends Controller
             $images_to_insert[$i]['room_id']  =  $room->id;    
 
             // storing the images
-            $images_to_insert[$i]["name"] = Storage::disk('public')->put('/', $images[$i]);
+            $images_to_insert[$i]["name"] = Storage::disk("images")->put('',$images[$i]);
 
         }
 
@@ -85,11 +94,8 @@ class RoomController extends Controller
 
 
 
-
-
-
         $request->session()->flash('status', 'Chambre créer avec succés');
-        return to_route('room.all');
+        return redirect()->route('room.all');
     }
 
 

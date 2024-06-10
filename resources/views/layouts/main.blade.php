@@ -29,10 +29,20 @@
 
     <nav>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="{{ route("room.index") }}">Accueil</a></li>
+            <li><a href="">About</a></li>
             <li><a href="#">Contact</a></li>
-            <li><a href="#">Login</a></li>
+
+            @if(Auth::check())
+                <li><a href="{{ route("user.dashboard") }}">Dashboard</a></li>
+
+                @if(Auth::user()->is_admin) 
+                    <li><a href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
+                @endif
+            @else
+                <li><a href="{{ route("login") }}">Connexion</a></li>
+                <li><a href="{{ route("register") }}">S'inscrir</a></li>
+            @endif
         </ul>
     </nav>
 
@@ -48,8 +58,11 @@
         </div>
     </footer>
 
-    <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/app.js"></script>
+    {{-- <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script> --}}
+
+     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     
 </body>
 </html>

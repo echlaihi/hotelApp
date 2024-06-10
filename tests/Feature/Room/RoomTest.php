@@ -44,8 +44,8 @@ class RoomTest extends TestCase
 
     public function test_only_admin_can_list_all_rooms()
     {
+        $this->withoutExceptionHandling();
         $response = $this->authenticateUser();
-        $this->withExceptionHandling();
         Room::factory(20)->create();
 
         $response = $response->get(route("room.all"));
@@ -80,10 +80,11 @@ class RoomTest extends TestCase
         $this->assertDatabaseCount('rooms', 1);
         $this->assertDatabaseCount('images', 3);
         $images = Image::where('room_id', 1)->get();
+
         
+        //test file uploading
         foreach ($images as $image) {
-            $exists = Storage::disk('public')->exists($image->name);
-            $this->assertTrue($exists);
+             Storage::disk('images')->assertExists($image->name);
         }
 
     }
