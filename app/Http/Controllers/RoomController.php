@@ -31,7 +31,8 @@ class RoomController extends Controller
 
     public function show(Room $room)
     {
-        $initial_image = $room->images()->where("is_initial", true)->get()[0];
+        $initial_image = $room->images()->where("is_initial", true)->get()->first();
+
         $images = $room->images()->where("is_initial", false)->get();
 
         return view("room.show")->with([
@@ -95,7 +96,7 @@ class RoomController extends Controller
 
 
         $request->session()->flash('status', 'Chambre créer avec succés');
-        return redirect()->route('room.all');
+        return redirect()->route('admin.rooms.list');
     }
 
 
@@ -107,6 +108,6 @@ class RoomController extends Controller
         $room->delete();
 
         $request->session()->flash("status", "Chambre supprimée avec succés");
-        return to_route("room.all");
+        return to_route("admin.rooms.list");
     }
 }

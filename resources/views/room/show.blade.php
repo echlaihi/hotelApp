@@ -10,8 +10,9 @@
                 <div id="grid-images">
 
 
-                    <img id="main-image" src="{{ asset('storage/images/'. $initial_image->name) }}">
-
+                    @if($initial_image)
+                        <img id="main-image" src="{{ asset('storage/images/'. $initial_image->name) }}">
+                    @endif
                     @if( count($images) )
 
                         @foreach($images as $image)

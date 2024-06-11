@@ -12,9 +12,9 @@
            <div class="wrapper">
                 <h1>Notre chambres</h1>
 
+                @if(count($rooms))
                <div class="container">
 
-                @if(count($rooms))
 
                     @foreach($rooms as $room)
                         <div class="room">
@@ -26,13 +26,15 @@
                                 </div>
                         </div>
                     @endforeach
+               
+
+               </div>
+
                 @else
 
                 <div class="alert alert-danger">Aucun chambre trouvée.</div>
 
                 @endif
-
-               </div>
                 
 
             </div>
