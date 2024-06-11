@@ -1,0 +1,14 @@
+#login{
+
+    h1{
+        &:before{
+            display: none;}
+
+            margin-top: 0;
+    }
+    form{
+        border: 1px solid $dark_gray;
+
+    }
+
+}

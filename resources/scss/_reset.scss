@@ -1,0 +1,25 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: inherit;
+}
+
+a{
+    text-decoration: none;
+}
+
+li {
+    list-style-type: none;
+}
+
+fieldset {
+    border: none;
+}
+
+main{
+    padding-top: 2.3rem;
+
+    border-top: 1px solid red !important;  
+    min-height: 100vh !important;
+}

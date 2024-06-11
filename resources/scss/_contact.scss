@@ -1,0 +1,52 @@
+#contact, #login, #edit-profile, #edit-password, #reservation-form{
+
+    // .wrapper{
+
+
+        form{ 
+
+            // border: 1px solid red;
+            background-color: $light_brown;
+            font-size: 1.2rem;
+            padding: 1rem;
+            margin-bottom: 4rem;
+
+
+            fieldset{
+
+                // border: 1px solid red;
+                margin: 1rem auto;
+                // width: 70%;
+
+            label{
+                width: 100%;
+                // border: 1px solid red;
+                padding-right: .5rem;
+                display: block;
+                }
+                input, textarea, button{
+                    background-color: $light_orange;
+                    display: block;
+                    border: none;
+                    padding: .8rem;
+                    width: 100%;
+                    margin: 1rem 0;
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                }
+
+                button:hover{
+                    background-color: $primary_brown;
+                    color: $waite;
+                }
+
+                label{
+                    margin: 0 1rem;
+
+                }
+            }
+        }
+
+    // }
+
+}

@@ -1,0 +1,79 @@
+#rooms{
+
+
+    .container{
+        
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        margin: auto;  
+
+
+    }
+
+   
+    
+    .room{
+        width: 48%;
+        margin: 1%;
+
+        @include tablet{
+            width: 98%;
+        }
+        border: 1px solid $dark_gray;
+
+        
+        
+        img{
+            width: 100%;
+            height: auto;
+
+            &:after{
+                content: "hello";
+                display: block;
+                width: inherit;
+                height: inherit;
+                background-color: red;
+                z-index: 100;
+            }
+        }
+
+        
+        .meta{
+            padding: .6rem;
+
+            
+        }
+
+        a{
+            
+
+            display: inline-block;
+            font-weight: bold;
+            border-radius: 5px;
+            background-color: $primary_brown;
+            color: $waite;
+            padding: .6rem;
+            margin: auto;
+
+            &:hover{
+                background-color: $light_orange;
+                color: $dark_gray;
+            }
+            
+            
+        }
+
+        p{
+            color: $light_orange;
+            padding: .5rem;
+            font-size: 1.3rem;
+            color: $dark_gray;
+
+        }
+
+    }
+
+    
+
+}

@@ -29,6 +29,14 @@ class MessageTest extends TestCase
         $this->assertDatabaseCount('messages', 1);
    }
 
+   public function test_a_user_can_list_all_of_his_messages()
+   {      
+          $this->withExceptionHandling();
+          $response = $this->authenticateUser();
+          $response = $response->get(route('admin.messages.list', ['type' => 'sent']));
+          $response->assertOk();
+   }
+
    public function test_authenticate_user_can_message_admin()
    {
         $response = $this->authenticateUser();

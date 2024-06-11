@@ -37,4 +37,31 @@ class MessageController extends Controller
 
 
     }
+
+    public function list($type)
+    {
+        $type = "df";
+        dd("hello orld");
+
+        if ($type != 'sent' && $type != 'received') {
+            return abort(404);
+        }
+
+        if ($type == 'sent'){
+            $messages = Message::where("sender", Auth::user()->email)->paginate(10);
+        } else {
+            $messages = Message::where("receiver", Auth::user()->email)->paginate(10);
+        }
+
+
+
+        // dd($messages);
+        if (Auth::user()->is_admin){
+
+            return view("admin.dashboard.messages")->with('messages', $messages);
+
+        } else {
+            dd("user");
+        }
+    }
 }

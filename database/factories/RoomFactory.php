@@ -17,10 +17,10 @@ class RoomFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => 'Single',
+            'type' => 'single',
             'is_available' => true,
             'price' => 900,
-            'conforts' => 'bain, tv'
+            'conforts' => 'bain, tv',
         ];
     }
 }

@@ -1,0 +1,10 @@
+$dark_red: #b30000;
+$light_red: #ff9999;
+
+.alert {
+  padding: .5rem;
+  margin: .4rem 0;
+  border: 1px solid red;
+  color: $dark_red;
+  background-color: $light_red;
+}
