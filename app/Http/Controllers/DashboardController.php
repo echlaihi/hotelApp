@@ -8,13 +8,22 @@ use App\Models\User;
 use App\Models\Room;
 use App\Models\Reservation;
 use App\Models\Message;
-
+use App\Models\Partner;
 
 class DashboardController extends Controller
 {
     public function getUserDashboard()
     {
-        return view('dashboard');
+        $reservations = Auth::user()->reservations()->where("status", "disactive")->get();
+        foreach ($reservations as $reservation) {
+            $reservation->partner =  Partner::find($reservation->partner_id) ??   null;
+        }
+
+        return view('dashboard', [
+            "reservations" => $reservations
+        ]);
+
+        
     }
 
     public function getAdmindashboard()

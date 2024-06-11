@@ -19,8 +19,8 @@ class MessageFactory extends Factory
         return [
             "title" => "this is the message title",
             "body" => "this is the message body",
-            "sender" => "system@email.com",
-            "receiver" => "receiver@email.com",
+            "sender" => "admin@email.com",
+            "receiver" => "admin@email.com",
 
         ];
     }

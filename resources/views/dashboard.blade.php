@@ -30,7 +30,9 @@
                  @include("profile.aside")
 
 
-                  <div class="container"></div>
+                  <div class="container">
+                    @include("components.reservations")
+                  </div>
 
         </div>
 

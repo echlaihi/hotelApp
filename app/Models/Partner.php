@@ -5,21 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Room;
 
-class Image extends Model
+class Partner extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        "name",
-        "is_initial",
-        "room_id"
+        "first_name",
+        "last_name",
+        "cin",
+        "user_id",
+        "marriage_contact",
     ];
 
-    public function images() : BelongsTo
+    public function user() : BelongsTo
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsTo(User::class);
     }
 
 

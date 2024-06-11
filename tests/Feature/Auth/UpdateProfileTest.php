@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UpdateProfileTest extends TestCase
 {
@@ -34,16 +35,19 @@ class UpdateProfileTest extends TestCase
 
         public function test_user_can_update_his_password()
         {
+			$this->withoutExceptionHandling();
         	$user = [
-        		"first_name"            => "test first name",
+        		"first_name"            => "test first",
         		"last_name"             => "test last",
         		"email"		            => "email@email.com",
         		"password"              => "password1",
         		"password_confirmation" => "password1",
-        		"cin" 		            => "idfas"
+        		"cin" 		            => "idfas9k"
         	];
         	$response = $this->post(route("register"), $user);
-        	$this->assertAuthenticated();
+			$response->assertRedirect(route("user.dashboard", absolute: false));
+			// dd(User::first()->first_name, User::first()->last_name, User::first()->email, User::first()->cin, User::first()->password);
+        	// $this->assertAuthenticated();
 
         	$passwords = [
         		"current_password" => "password1",

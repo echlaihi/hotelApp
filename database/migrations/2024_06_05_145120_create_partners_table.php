@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string("last_name");
             $table->string("cin");
             $table->foreignId("user_id")->references("id")->on("users");
-            $table->string("marriage_contract")->nullable();
             $table->timestamps();
         });
     }

@@ -7,13 +7,20 @@
                 @csrf
                 <fieldset>
                     <label>date de dépard</label>
-                    <input type="date" name="date_depart">
+
+                    @error("start_date")
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <input type="date" name="start_date" value="{{ old('start_date') }}">
                 </fieldset>
 
                   <fieldset>
                    <!-- <div class="form-group"> -->
                         <label>date de fin</label>
-                        <input type="date" name="date_fin">
+                        @error("end_date")
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                        <input type="date" name="end_date" value="{{ old('end_date') }}">
                    </fieldset>
                    
                 
@@ -21,24 +28,36 @@
                 <fieldset>
                 <!-- <div class="form-group"> -->
                      <label>Prenom de votre partenaire</label>
-                     <input type="text" name="partner_first_name">
+                     @error("partner_first_name")
+                        <div class="alert alert-dange">{{ $message }}</div>
+                     @enderror
+                     <input type="text" name="partner_first_name" value="{{ old("partner_first_name") }}">
                 </fieldset>
                    <fieldset>
                    <!-- <div class="form-group"> -->
                         <label>Nom de votre partenaire</label>
-                        <input type="text" name="partner_last_name">
+                         @error("partner_last_name")
+                            <div class="alert alert-dange">{{ $message }}</div>
+                        @enderror
+                        <input type="text" name="partner_last_name" value="{{ old("partner_last_name") }}">
                    </fieldset>
 
                     <fieldset>
                    <!-- <div class="form-group"> -->
                         <label>Cin de votre partenaire</label>
-                        <input type="text" name="partner_cin">
+                         @error("partner_cin")
+                            <div class="alert alert-dange">{{ $message }}</div>
+                        @enderror
+                        <input type="text" name="partner_cin" value="{{ old("partner_cin") }}">
                    </fieldset>
 
                     <fieldset>
                    <!-- <div class="form-group"> -->
                         <label>Contract de marriage</label>
-                        <input type="file" name="marriage_contract">
+                         @error("marriage_contract")
+                            <div class="alert alert-dange">{{ $message }}</div>
+                        @enderror
+                        <input type="file" name="marriage_contract" value="{{ old("marriage_contract") }}">
                    </fieldset>
 
                   

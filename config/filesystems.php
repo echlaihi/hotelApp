@@ -36,10 +36,18 @@ return [
             'throw' => false,
         ],
 
-        'public' => [
+        'contracts' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => storage_path('app/contracts'),
+            'url' => env('APP_URL').'/contracts',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/images'),
+            'url' => env('APP_URL') . '/images',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -70,7 +78,8 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
-    ],
+        public_path('storage/images') => storage_path('app/images'),
+        public_path('storage/contracts') => storage_path('app/contracts'),
+     ],
 
 ];

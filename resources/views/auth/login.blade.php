@@ -56,7 +56,7 @@
     <section id="login">
 
         <div class="wrapper">
-                    <h1>Login</h1>
+                    <h1>Connexion</h1>
             <form action="{{ route('login') }}" method="post"> 
                 @csrf
 
