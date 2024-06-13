@@ -10,6 +10,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use App\Models\Reservation;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
@@ -90,28 +91,9 @@ class ReservationTest extends TestCase
     public function test_a_user_can_reserve_a_room_of_type_double_triple()
     {
         $this->withoutExceptionHandling();
-        $room = Room::factory(['type' => 'double'])->create();
 
         $response = $this->authenticateUser();
-        $file_name = "contract.pdf";
-        $content = "content";
-        file_put_contents($file_name, $content);
-        $fake_pdf = UploadedFile::fake()->create($file_name);
-
-        $reservation = [
-            "partner_first_name" => "test1",
-            "partner_last_name" => "test2",
-            "partner_cin"               => "id4545",
-            "marriage_contract"  =>  $fake_pdf,
-            "start_date" => "2024-06-12",
-            "end_date"   => "2024-06-19",
-
-        ];
-
-
-        $response = $response->post(route("reservation.make", $room->id), $reservation);
-        $response->assertRedirect();
-
+        $this->createReservation($response);
         $this->assertDatabaseCount('reservations', 1);
         $this->assertDatabaseCount('partners', 1);
 
@@ -122,10 +104,83 @@ class ReservationTest extends TestCase
         unlink('storage/app/contracts/' . $reservation->marriage_contract);
     }
 
-    // public function test_authenticated_user_can_show_his_reservation()
-    // {
-    //     Reservation::factory()->create();
+    public function test_authenticated_user_can_show_his_reservation()
+    {
+        $reseponse = $this->authenticateUser();
+        Reservation::factory()->create();
+        $response = $reseponse->get(route("user.dashboard"));
+        $response->assertOk();
+        $response->assertViewIs("dashboard");
         
-    // }
+    }
+
+    public function test_a_user_can_delete_his_reservation()
+    {
+        // $this->withExceptionHandling();/*  */
+        $response = $this->authenticateUser();
+        $this->createReservation($response);
+
+        $this->assertDatabaseCount("reservations", 1);
+        $reservation = Reservation::where("user_id", Auth::user()->id)->first();
+        Storage::disk("contracts")->assertExists($reservation->marriage_contract);
+
+        
+        $response = $response->delete(route("reservation.delete", 1));
+        $this->assertDatabaseCount("reservations", 0);
+        Storage::disk("contracts")->assertMissing($reservation->marriage_contract);
+        // $this->assertFalse($exists);
+        // dd($exists);
+    }
+
+    public function test_admin_can_delete_any_reservation()
+    {
+        $response = $this->authenticateUser();
+        $this->createReservation($response);
+
+        $response = $this->authenticateAdmin();
+        $this->assertDatabaseCount('users', 2);
+        $reservation = Reservation::first();
+        $response = $response->delete(route('admin.reservation.delete', $reservation->id));
+        $this->assertDatabaseCount("reservations", 0);
+        Storage::disk("contracts")->assertMissing($reservation->marriage_contract);
+        $response->assertRedirect();
+
+
+    }
+
+    public function test_admin_can_mark_reservation_as_ready()
+    {
+        $response = $this->authenticateUser();
+        $this->createReservation($response);
+
+        $response = $this->authenticateAdmin();
+        $this->AssertDatabaseCount("users", 2);
+
+        $reservation = Reservation::first();
+        $response = $response->put(route("admin.reservation.update", ['reservation' => $reservation->id, 'status' => 'prêt']));
+        $this->assertSame('prêt', Reservation::first()->status);
+
+    }
+
+    private function createReservation($response)
+    {
+        $file_name = "contract.pdf";
+        $content = "content";
+        file_put_contents($file_name, $content);
+        $fake_pdf = UploadedFile::fake()->create($file_name);
+        $reservation = [
+            "partner_first_name" => "test1",
+            "partner_last_name" => "test2",
+            "partner_cin"               => "id4545",
+            "marriage_contract"  =>  $fake_pdf,
+            "start_date" => now()->addDay(),
+            "end_date"   => now()->addDays(10),
+
+        ];
+
+
+        $room = Room::factory(['type' => 'double'])->create();
+        $response->post(route("reservation.make", $room->id), $reservation);
+    }
 
 }

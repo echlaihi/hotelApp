@@ -69,7 +69,7 @@
 
 
                     <!-- <input type="email" name="email"> -->
-                </fieldset>
+                {{-- </fieldset>
                     <button id="PayOnline">Payer on line? </button>
 
                 <fieldset>
@@ -92,7 +92,7 @@
 
                 <fieldset>
                     <button type="submit" name="submit">Réserver</button>
-                </fieldset>
+                </fieldset> --}}
 
             </form>
 

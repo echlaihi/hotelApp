@@ -71,6 +71,7 @@
                   <thead>
                         <tr>
                             <th>reservation id</th>
+                            <th>facture</th>
                             <th>email du client</th>
                             <th>nom du client</th>
                               <th>nom client</th>
@@ -92,10 +93,11 @@
                         @foreach($reservations as $reservation)
                               <tr>
                                     <td>{{ $reservation->id }}</td>
+                                    <td>{{ $reservation->invoice }}DH</td>
                                     <td>{{ $reservation->user->email }}</td>
                                     <td>{{ $reservation->user->first_name }}</td>
                                     <td>{{ $reservation->user->last_name }}</td>
-                                    <td>{{ $reservation->partner }}</td>
+                                    <td>{{ $reservation->invoice }}</td>
                                     {{-- <td>{{ $reservation->partner }}</td> --}}
                                     <td>{{ $reservation->created_at->format('Y-m-d')  }}</td>
                                     <td>{{ $reservation->start_date }}</td>
@@ -108,8 +110,15 @@
                                         <form  class="mx-1" action="#">
                                             <button class="btn btn-sm btn-danger">supprimer</button>
                                         </form>
-                                        <form action="#">
-                                            <button class="btn btn-sm btn-info">activer</button>
+
+                                        @php
+                                                $status = ($reservation->status == 'prêt') ?'disactivée' : 'prêt';
+                                        @endphp
+                                        <form action="{{ route('admin.reservation.update', ['reservation' => $reservation->id, 'status' => $status]) }}" method="POST">
+
+                                            @csrf
+                                            @method("PUT")
+                                            <button class="btn btn-sm btn-info">marquer comme {{ $status }}</button>
                                         </form>
                                     </td>
 

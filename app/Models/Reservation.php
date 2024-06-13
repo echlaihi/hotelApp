@@ -19,7 +19,8 @@ class Reservation extends Model
         "end_date", 
         "status",
         "partner_id",
-        "marriage_contract"
+        "marriage_contract",
+        "invoice"
     ];
 
    public function room() : BelongsTo

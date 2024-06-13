@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("status"); // active, ready, disactive, terminate
             $table->date("start_date");
             $table->date("end_date");
+            $table->float("invoice");
             $table->timestamps();
         });
     }

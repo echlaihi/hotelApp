@@ -8,6 +8,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Middleware\checkAdminMiddlware;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Models\Reservation;
 use App\Models\Room;
 
 Route::get('/', function () {
@@ -49,6 +50,10 @@ Route::get('/admin/dashboard/users', [UserController::class, 'list'])->middlewar
 
 Route::get('/admin/dashboard/messages/{type}/', [MessageController::class, 'list'])->middleware(['auth', checkAdminMiddlware::class])->name('admin.messages.list');
 
+Route::delete('admin/dashboard/reservation/{reservation}', [ReservationController::class, 'delete'])->middleware(['auth', checkAdminMiddlware::class])->name('admin.reservation.delete');
+
+Route::put('/admin/dashboard/reservation/{reservation}/{status}', [ReservationController::class, 'update'])->middleware(['auth', checkAdminMiddlware::class])->name('admin.reservation.update');
+
 
 // Authentication routes
 require __DIR__.'/auth.php';
@@ -59,4 +64,7 @@ Route::post('/message/send', [MessageController::class, 'send'])->name('message.
 
 // Reservation routes
 Route::post('/rooms/reservation/{room}', [ReservationController::class, 'make'])->middleware(['auth'])->name("reservation.make");
+Route::delete('/dashboard/reservation/{reservation}', [ReservationController::class, 'delete'])->middleware(['auth'])->name('reservation.delete');
+
+
 

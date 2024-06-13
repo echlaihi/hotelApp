@@ -17,14 +17,17 @@ $(document).ready(function() {
     var contract_area = $(".contract_area");
     var show_btn = $(".marriageBtn");
     var mainContainer = $("main .container");
+    var iframe = $(".contract_area iframe");
+    
     
 
     Array.from(show_btn).forEach(function(btn) {
         $(btn).click(function(e) {
 
-            // var src = "http://127.0.0.1:8000/storage/contracts/" + $(e.target).attr("data");
+            var src = "http://127.0.0.1:8000/storage/contracts/" + $(e.target).attr("data");
             $(contract_area).addClass("open");
-            ;
+            $(iframe).attr("src", src);
+            
             
             
         });
@@ -32,7 +35,6 @@ $(document).ready(function() {
 
     // closing the contract area
     var btn = $(".contract_area .btn");
-    console.log(btn);
     $(btn).click(function(){
         $(contract_area).removeClass("open")
     });

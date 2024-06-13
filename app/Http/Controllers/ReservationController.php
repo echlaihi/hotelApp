@@ -51,7 +51,10 @@ class ReservationController extends Controller
 
 		]);
 
-		
+		$start_date = Carbon::parse($validated_data['start_date']);
+		$end_date = Carbon::parse($validated_data['end_date']);
+
+		$num_days = (int) $start_date->diffInDays($end_date);
 		
 		$reservation = [
 			"user_id" => Auth::user()->id,
@@ -60,6 +63,7 @@ class ReservationController extends Controller
 			"room_id"    => $room->id,
 			"status"	 => "disactive",
 			"partner_id" => null,
+			"invoice"  	 => ($num_days * $room->price), 
 			
 		];
 		
@@ -84,6 +88,10 @@ class ReservationController extends Controller
 		]);
 
 
+		$start_date = Carbon::parse($validated_data['start_date']);
+		$end_date = Carbon::parse($validated_data['end_date']);
+
+		$num_days = (int) $start_date->diffInDays($end_date);
 		$contract_name = Storage::disk("contracts")->put('', $validated_data['marriage_contract']);
 
 		// Storage::disk("images")->put('', $images[$i])
@@ -106,11 +114,34 @@ class ReservationController extends Controller
 			'room_id'    => $room->id,
 			'status' 	 => 'disactive',
 			'marriage_contract' => $contract_name,
+			"invoice" 	=> ($num_days * $room->price),
+			
 
 		]);
 
 
 
 
+	}
+
+	public function delete(Reservation $reservation, Request $request)
+	{	
+		if ((Auth::user()->id != $reservation->user_id)) if(!Auth::user()->is_admin) abort(404);
+
+		if (isset($reservation->marriage_contract)) unlink('storage/app/contracts/' . $reservation->marriage_contract);
+		$reservation->delete();
+
+		$request->session()->flash("status", "Réservation supprimée");
+		return redirect()->back();
+	}
+
+	public function update(Reservation $reservation, $status, Request $request)
+	{
+		if ($status != 'disactivée' && $status != 'prêt' && $status != 'activée') return abort(404);
+
+		$reservation->update(['status' => $status]);
+		$request->session()->flash("status", "Réservation modifiée");
+
+		return redirect()->back();
 	}
 }

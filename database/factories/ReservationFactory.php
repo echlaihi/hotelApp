@@ -27,7 +27,8 @@ class ReservationFactory extends Factory
             "room_id" => Room::factory()->create()->id,
             "start_date" => Carbon::now()->addDay(1),
             "end_date" => Carbon::now()->addDay(3),
-            "status" => "disactive",
+            "status" => "disactivée",
+            "invoice" => "300",
         ];
     }
 }
