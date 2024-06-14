@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("body");
             $table->string("receiver");
             $table->string("sender");
+            $table->time("read_at")->nullable()->default(null);
             $table->timestamps();
         });
     }

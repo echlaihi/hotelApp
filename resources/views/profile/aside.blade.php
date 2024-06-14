@@ -12,6 +12,8 @@
                             </a></li>
                             <li><a href="{{ route('profile.edit') }}">Parametre</a></li>
                             <li><a href="{{ route('room.index') }}">Réserver</a></li>
+                            <li><a href="{{ route('messages.list', ['type' => 'sent']) }}">Méssages envoyées</a></li>
+                            <li><a href="{{ route('messages.list', ['type' => 'received']) }}">Méssages recu</a></li>
                             <li>
                                 <form method="post" action="{{ route('logout') }}">
                                     @csrf

@@ -1,4 +1,4 @@
-.reservation {
+.card, .message {
     border: 1px solid $dark_gray;
     height: 3rem;
     position: relative;
@@ -10,7 +10,7 @@
 
     overflow: hidden;
 
-    .reservation-field {
+    .card-body, .message-field {
         // border: 1px solid green;
         padding: 1rem;
         display: flex;
@@ -28,7 +28,7 @@
     }
 
 
-    .reservationBtn {
+    .cardBtn, .read {
         cursor: pointer;
         display: block;
         border: 1px solid $dark_gray;
@@ -42,5 +42,10 @@
         margin: .3rem;
 
 
+    }
+
+    .read{
+        right: 5rem;
+        background-color: green;
     }
 }

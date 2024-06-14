@@ -22,9 +22,9 @@ $(document).ready(function(){
 
 	// Handling reservation display in user dashboard
 
-	var reservationBtn = $('.reservationBtn');
+	var cardBtn = $('.cardBtn');
 
-	Array.from(reservationBtn).forEach(btn => {
+	Array.from(cardBtn).forEach(btn => {
 		$(btn).on("click", function (e) {
 			var reservation = $(e.target).parent()[0];
 			$(reservation).toggleClass("open");

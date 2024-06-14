@@ -12998,8 +12998,8 @@ $(document).ready(function () {
 
   // Handling reservation display in user dashboard
 
-  var reservationBtn = $('.reservationBtn');
-  Array.from(reservationBtn).forEach(function (btn) {
+  var cardBtn = $('.cardBtn');
+  Array.from(cardBtn).forEach(function (btn) {
     $(btn).on("click", function (e) {
       var reservation = $(e.target).parent()[0];
       $(reservation).toggleClass("open");

@@ -37,12 +37,6 @@ main {
   padding: 0 1%;
   margin: 0 auto;
 }
-@media screen and (max-width: 942px) {
-  .wrapper {
-    border: 4px solid green;
-  }
-}
-
 html,
 body {
   background-color: #fff5ea;
@@ -360,27 +354,27 @@ footer p {
   background-color: #1541a7;
 }
 
-.reservation {
+.card, .message {
   border: 1px solid #4e4e50;
   height: 3rem;
   position: relative;
   margin-bottom: 0.3rem;
   overflow: hidden;
 }
-.reservation.open {
+.card.open, .message.open {
   height: -moz-fit-content;
   height: fit-content;
 }
-.reservation .reservation-field {
+.card .card-body, .card .message-field, .message .card-body, .message .message-field {
   padding: 1rem;
   display: flex;
   letter-spacing: 0.1rem;
   font-size: 1.1rem;
 }
-.reservation .reservation-field p {
+.card .card-body p, .card .message-field p, .message .card-body p, .message .message-field p {
   padding-left: 1rem;
 }
-.reservation .reservationBtn {
+.card .cardBtn, .card .read, .message .cardBtn, .message .read {
   cursor: pointer;
   display: block;
   border: 1px solid #4e4e50;
@@ -392,6 +386,10 @@ footer p {
   right: 0;
   padding: 0.5rem;
   margin: 0.3rem;
+}
+.card .read, .message .read {
+  right: 5rem;
+  background-color: green;
 }
 
 main#dashboard {

@@ -55,6 +55,7 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <input type="email" name="sender" value="{{ old("sender") }}">
+                        <input type="hidden" name="receiver" value="{{ env("MAIL_FROM_ADDRESS") }}">
                     </fieldset>
 
                      <fieldset>

@@ -11,10 +11,6 @@ use App\Http\Controllers\UserController;
 use App\Models\Reservation;
 use App\Models\Room;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/dashboard', [DashboardController::class, 'getUserDashboard'])->middleware(['auth', 'verified'])->name('user.dashboard');
 
 Route::get('/admin/dashboard', [DashboardController::class, 'getAdminDashboard'])->middleware(['auth', 'verified',checkAdminMiddlware::class])->name('admin.dashboard');
@@ -59,12 +55,15 @@ Route::put('/admin/dashboard/reservation/{reservation}/{status}', [ReservationCo
 require __DIR__.'/auth.php';
 
 // Messages routes
-Route::get('/dashboard/messages', [MessageController::class, 'list'])->middleware('auth')->name('messages.list');
+Route::get('/dashboard/messages/{type}', [MessageController::class, 'list'])->middleware('auth')->name('messages.list');
 Route::post('/message/send', [MessageController::class, 'send'])->name('message.send');
+Route::put('/api/message/{message}/read', [MessageController::class, 'read'])->name('message.read');
+
 
 // Reservation routes
 Route::post('/rooms/reservation/{room}', [ReservationController::class, 'make'])->middleware(['auth'])->name("reservation.make");
 Route::delete('/dashboard/reservation/{reservation}', [ReservationController::class, 'delete'])->middleware(['auth'])->name('reservation.delete');
+
 
 
 

@@ -29,13 +29,30 @@ class MessageTest extends TestCase
         $this->assertDatabaseCount('messages', 1);
    }
 
-   public function test_a_user_can_list_all_of_his_messages()
+   public function test_admin_can_list_all_of_his_messages()
    {      
-          $this->withExceptionHandling();
-          $response = $this->authenticateUser();
-          $response = $response->get(route('admin.messages.list', ['type' => 'sent']));
+          $this->withoutExceptionHandling();
+          $response = $this->authenticateAdmin();
+          $response1 = $response->get(route('admin.messages.list', ['type' => 'sent']));
+          $response1->assertViewIs("admin.dashboard.messages");
+          $response1->assertOk();
+
+          $response = $response->get(route('admin.messages.list', ['type' => 'received']));
+          $response->assertViewIs("admin.dashboard.messages");
           $response->assertOk();
    }
+
+     public function test_user_can_list_all_of_his_messages()
+     {
+          $response = $this->authenticateUser();
+          $response1 = $response->get(route('messages.list', ['type' => 'sent']));
+          $response1->assertViewIs("messages.index");
+          $response1->assertOk();
+
+          $response = $response->get(route('messages.list', ['type' => 'received']));
+          $response->assertViewIs("messages.index");
+          $response->assertOk();
+     }
 
    public function test_authenticate_user_can_message_admin()
    {
@@ -72,6 +89,15 @@ class MessageTest extends TestCase
         $response = $response->post(route("message.send"), $message);
         $response->assertRedirect();
         $this->assertDatabaseCount("messages", 1);
+   }
+
+   public function test_a_user_can_mark_a_message_as_read()
+   {
+        $response = $this->authenticateUser();
+        $message = Message::factory(['receiver' => Auth::user()->email])->create();
+
+        $response = $response->put(route("message.read", $message->id));
+        $response->assertJsonStructure(['read_at']);
    }
 
 

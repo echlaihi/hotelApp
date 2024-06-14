@@ -5,38 +5,105 @@
    <div class="card p-0 mb-5 ">
 
                 <div class="card-header d-flex justify-content-between">
-                    <h3>Messages</h3>
+                    <h3>Messages {{ $type }}</h3>
                 </div>
                 <div class="card-body">
 
                     @if(count($messages))
 
-                             <div class="accordion" id="accordionExample">
-
-                        @foreach($messages as $msg)
-                            <div class="accordion-item my-3">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $msg->id }}" aria-expanded="true">
-                                        {{ $msg->title }} recu par {{ $msg->sender }} le {{ $msg->created_at }}
-                                    </button>
-                                </h2>
-                                <div id="collapse{{ $msg->id }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    {{ $msg->body }}
+                          @foreach($messages as $message)
+                          <div class="card">
+                              <div class="card-body message">
+                                    <button class="cardBtn btn btn-sm btn-info">Voir plus</button>
+                              {{-- <button class="read">marquer comme lu</button> --}}
+                              
+                              <div class="card-text"><b style="padding-right: 10px; ">récepteur :</b> {{ $message->receiver }}</div>
+                              <div class="card-text"><b style="padding-right: 10px; ">émetteur  :</b>   {{ $message->receiver }}</div>
+                              <div class="card-text"><b style="padding-right: 10px; ">titre du message :</b>  {{ $message->title }}</div>
+                              <div class="card-text"><b style="padding-right: 10px; ">cops du message :</b>  {{ $message->body }}</div>
+                              <div class="card-text"><b style="padding-right: 10px; ">envoyé : </b>   {{ $message->created_at->diffForHumans() }}</div>
                                 </div>
-                                </div>
-                            </div>
-                        @endforeach
+                          </div>
 
-                        {{ $messages->links() }}
-                    </div>
+                          @endforeach
 
-                    @else 
-                        <div class="alert alert-danger">Aucun messages</div>
-                    @endif
+                          <div class="mt-4">{{ $messages->links() }}</div>
+
+                        @else
+                            <div class="alert alert-danger">Auncun message {{ $type }}</div>
+                        @endif
 
                 </div>
 
     </div>
+
+    <style>
+
+        .cardBtn{
+            position: absolute;
+            top: .5rem;
+            right: .5rem;
+        }
+
+        .card-text{
+            padding: .5rem;
+        }
+
+        .card{
+            position: relative;
+
+        }
+
+        .message{
+            height: 2.8rem;
+            overflow-y: hidden;
+            border: 1px solid black; 
+            padding: 0;
+        }
+
+        .open{
+            height: fit-content;
+        }
+
+    </style>
+
+
+
+    {{-- contacter un utilisateur --}}
+    <div class="card p-0 mb-5">
+        <div class="card-header p-4"><h3>Contacter un utilisateur</h3></div>
+
+        <div class="card-body">
+            <form class="form" action="{{ route('message.send') }}" method="POST">
+                @csrf
+
+                <fieldset class="mt-3">
+                     <label class="m-1">récepteur</label>
+                    <input  class="form-control" type="text" name="receiver">
+                    <input type="hidden" name="sender" value="{{ env('MAIL_FROM_ADDRESS') }}">
+                </fieldset>
+
+                <fieldset class="mt-3">
+                     <label class="m-1">Titre de votre message</label>
+                    <input  class="form-control" type="text" name="title">
+                </fieldset>
+
+                <fieldset class="mt-3">
+                     <label class="m-1">Votre message</label>
+                    <textarea class="form-control" rows="7" name="body"></textarea>
+                </fieldset> 
+
+                <fieldset class="mt-3">
+                    <button class="btn btn-primary">Envoyer</button>
+                </fieldset>
+
+            </form>
+        </div>
+    </div>
+
+        <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+     <script src="https://kit.fontawesome.com/99d030ebb4.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+
 
 @endsection

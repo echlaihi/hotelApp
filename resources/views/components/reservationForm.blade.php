@@ -88,11 +88,11 @@
                 <fieldset>
                     <label>Titulaire de la carte</label>
                     <input type="text" name="name">
-                </fieldset>
+                </fieldset> --}}
 
                 <fieldset>
                     <button type="submit" name="submit">Réserver</button>
-                </fieldset> --}}
+                </fieldset> 
 
             </form>
 

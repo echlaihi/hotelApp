@@ -14,6 +14,7 @@ class Message extends Model
             "body",
             "sender",
             "receiver",
+            "read_at"
         ];
 
 }
