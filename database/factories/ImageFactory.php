@@ -19,11 +19,11 @@ class ImageFactory extends Factory
     public function definition(): array
     {
         $img = UploadedFile::fake()->image("imge.jpg", 500, 400)->size(100);
-        $img = Storage::disk("images")->put('', $img);
+        $img = Storage::disk("images")->put('0', $img);
         return [
             "room_id" => 1,
             "name" => $img,
-            "is_initial" => random_int(0, 1),
+            "is_initial" => true
         ];
     }
 }

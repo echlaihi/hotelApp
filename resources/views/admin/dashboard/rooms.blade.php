@@ -61,7 +61,7 @@
                                     <td>{{ $room->conforts }}</td>
                                     <td>
                                           <a href="{{ route('room.show', $room->id) }}" class="btn btn-sm btn-success">Voir</a>
-                                          <a href="#" class="btn btn-sm btn-info">Modifer</a>
+                                          <a href="{{ route("room.edit", $room->id) }}" class="btn btn-sm btn-info">Modifer</a>
 
                                           <form  class="d-inline" action="{{ route('room.delete', $room->id) }}" 
                                                 method="POST">

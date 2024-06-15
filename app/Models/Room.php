@@ -13,10 +13,16 @@ class Room extends Model
 
     protected $fillable = [ 
         "type",
-        "is_available",
+        // "is_available",
         "price",
         "conforts"
     ];
+
+    protected $hidden = [
+       "is_available"
+    ];
+
+
 
     public function images() : HasMany
     {

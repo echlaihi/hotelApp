@@ -82,9 +82,9 @@ class RoomTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $room = Room::factory()->make()->toArray();
-        $room['image1'] = UploadedFile::fake()->image("initial.jpg", 1000, 900)->size(2000);
-        $room['image2'] = UploadedFile::fake()->image("initial2.jpg", 1000, 900)->size(2000);
-        $room['image3'] = UploadedFile::fake()->image("initial3.jpg", 1000, 900)->size(2000);
+        $room['image1'] = UploadedFile::fake()->image("initial.jpg", 1000, 900)->size(900);
+        $room['image2'] = UploadedFile::fake()->image("initial2.jpg", 1000, 900)->size(900);
+        $room['image3'] = UploadedFile::fake()->image("initial3.jpg", 1000, 900)->size(900);
         // $room['image4'] = UploadedFile::fake()->image("initial4.jpg", 1000, 900)->size(2000);
 
         $response1 = $this->authenticateAdmin();
@@ -142,5 +142,66 @@ class RoomTest extends TestCase
 
         $this->removeImages();
     }
+
+    public function test_admin_can_see_edit_room_form()
+    {
+        $response = $this->authenticateAdmin();
+        $room = Room::factory()->create();
+        $image = Image::factory(['room_id' => $room->id])->create();
+
+        $response = $response->get(route("room.edit", $room->id));
+        $response->assertOk();
+
+        $response2 = $this->authenticateUser();
+        $response2 = $response2->get(route("room.edit", $room->id));
+        $response2->assertNotFound();
+    }
+
+    public function test_admin_can_update_a_room()
+    {
+        $this->withoutExceptionHandling();
+        $room = Room::factory(['type' => 'double'])->create();
+        $image = Image::factory(['room_id' => $room->id])->create();
+
+
+       
+
+        $updated_room = ['type' => 'triple', 'price' => 800, 'conforts' => 'jeux'];
+        $updated_room['image1'] = UploadedFile::fake()->image("initial.jpg", 1000, 900)->size(900);
+        $updated_room['image2'] = UploadedFile::fake()->image("initial.jpg", 1000, 900)->size(900);
+        $updated_room['image3'] = UploadedFile::fake()->image("initial.jpg", 1000, 900)->size(900);
+
+        $response = $this->authenticateAdmin();
+
+        // // $room['room'] d;
+        
+        $old_images = Image::where("room_id", $room->id)->get();
+        $response = $response->put(route("room.update", $room->id), $updated_room);
+        
+        $room = Room::find($room->id)->toArray();
+
+        unset($room['created_at']);
+        // unset($room['id']);
+        unset($room['updated_at']);
+
+        unset($updated_room['image1']);
+        unset($updated_room['image2']);
+        unset($updated_room['image3']);
+
+        // $this->assertSame($updated_room, $room);
+        foreach($old_images as $image) {
+            Storage::disk("images")->assertMissing($image);
+        }
+
+        $new_images = Image::where('room_id', $room['id'])->get();
+        $this->assertcount(3, $new_images);
+        foreach($new_images as $image) {
+            Storage::disk("images")->assertExists($image->name);
+        }
+
+        unset($room['id']);
+        $this->assertSame($room, $updated_room);
+
+    }   
 
 }

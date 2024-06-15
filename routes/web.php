@@ -29,6 +29,8 @@ Route::get('/room/{room}', [RoomController::class, 'show'])->name('room.show');
 
 
 Route::get('/admin/dashboard/room/create', [RoomController::class, 'create'])->middleware(['auth',  checkAdminMiddlware::class])->name('room.create');
+Route::get('/admin/dashboard/room/{room}/edit', [RoomController::class, 'edit'])->middleware(['auth',  checkAdminMiddlware::class])->name('room.edit');
+Route::put('/admin/dashboard/room/{room}/update', [RoomController::class, 'update'])->middleware(['auth',  checkAdminMiddlware::class])->name('room.update');
 
 Route::get('/admin/dashboard/rooms', [Roomcontroller::class, 'getAll'])->middleware(['auth', checkAdminMiddlware::class])->name('admin.rooms.list');
 

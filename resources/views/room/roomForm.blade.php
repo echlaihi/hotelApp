@@ -4,19 +4,41 @@
 
 <div class="card p-0">
             <div class="card-header">
-              <h3 class="p-2">Créer un chambre</h3>
+              <h3 class="p-2">{{ $action }} un chambre</h3>
             </div>
 
             <div class="card-body">
-              <form enctype="multipart/form-data" action="{{ route('room.store') }}" method="POST"  class="form">
-
+              <form enctype="multipart/form-data"class="form" method="POST" @if($action == "Créer") action="{{ route("room.store") }}"> @else action="{{ route('room.update', $room->id) }}">
+                @method("PUT")
+                @endif
                 @csrf
-                <label for="name" class="p-2 mt-3">Image principale: </label>
+                <label for="name" class="d-block p-2 mt-3">Image principale: </label>
+                @if($action == 'Modifier') <img class="my-2" src="{{ asset("storage/images/" . $initial_image->name) }}" alt="">@endif
                 @error('image1')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
 
-                <input type="file" class="form-control" name="image1" value="{{ old('image1') }}">
+
+                <input type="file" class="form-control" name="image1" value="{{ old('image1')  }}">
+
+                @if($action == 'Modifier') 
+                @php
+                  $i = 0;
+                @endphp
+                <div class="row mt-4">
+                  @if(count($images))
+                    @foreach($images as $image)
+                    <div class="card col-md-3">
+                      <label for="name" class="p-2 mt-3">Image supplémentaire {{ $i }}: </label>
+                      <img class="my-2" src="{{ asset("storage/images/" . $image->name) }}" alt="">
+                      @php $i++ @endphp
+                    </div>
+                    @endforeach
+                  @endif
+
+                </div>
+                @endif
+
 
                  <label for="name" class="p-2 mt-3">Image supplémentaire 1: </label>
                   @error('image2')
@@ -49,7 +71,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
 
-                <input type="text" name="price" class="form-control" value="{{ old('price') }}">
+                <input type="text" name="price" class="form-control" value="{{ old('price') ?? (isset($room) ? $room->price : "") }}">
 
                 <label  class="p-2 mt-3">Type: </label>
 
@@ -57,14 +79,14 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror   
 
-                <input type="text" name="type" class="form-control" value="{{ old('type') }}">
+                <input type="text" name="type" class="form-control" value="{{ old('type') ?? (isset($room) ? $room->type : "")}}">
 
                 <label class="p-2 mt-3">Outils de comforts: </label>
                  @error('conforts')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
 
-                <input type="text" name="conforts" class="form-control" value="{{ old('conforts') }}">
+                <input type="text" name="conforts" class="form-control" value="{{ old('conforts') ?? (isset($room) ? $room->conforts : "")}}">
 
                 <input type="submit" value="Enregister" class="btn btn-primary my-3">
               </form>
