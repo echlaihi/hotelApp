@@ -1,5 +1,6 @@
 @extends("admin.dashboard.layouts.app")
 
+@section("title", $action . " une chambre")
 @section("content")
 
 <div class="card p-0">
@@ -12,8 +13,16 @@
                 @method("PUT")
                 @endif
                 @csrf
-                <label for="name" class="d-block p-2 mt-3">Image principale: </label>
-                @if($action == 'Modifier') <img class="my-2" src="{{ asset("storage/images/" . $initial_image->name) }}" alt="">@endif
+
+                @if($action == 'Modifier')
+                      <div class="card col-md-3">
+                      <div for="name" class="p-2 mt-3">l'image pricipale : </div>
+                      <img class="my-2" src="{{ asset("storage/images/" . $initial_image->name) }}" alt="">
+                    </div>
+                @endif
+
+                <label for="name" class="d-block p-2 mt-3">{{ $action }} l'image principale: </label>
+
                 @error('image1')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -29,7 +38,7 @@
                   @if(count($images))
                     @foreach($images as $image)
                     <div class="card col-md-3">
-                      <label for="name" class="p-2 mt-3">Image supplémentaire {{ $i }}: </label>
+                      <div for="name" class="p-2 mt-3">Image supplémentaire {{ $i+1 }}: </div>
                       <img class="my-2" src="{{ asset("storage/images/" . $image->name) }}" alt="">
                       @php $i++ @endphp
                     </div>
@@ -40,14 +49,14 @@
                 @endif
 
 
-                 <label for="name" class="p-2 mt-3">Image supplémentaire 1: </label>
+                 <label for="name" class="p-2 mt-3">{{ $action }} l'image supplémentaire 1: </label>
                   @error('image2')
                     <div class="alert alert-danger">{{ $message }}</div>
                   @enderror
 
                 <input type="file" class="form-control" name="image2" value="{{ old('image2') }}">
 
-                 <label for="name" class="p-2 mt-3">Image supplémentaire 2: </label>
+                 <label for="name" class="p-2 mt-3">{{ $action }} l'image supplémentaire 2: </label>
 
                   @error('image3')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -55,7 +64,7 @@
 
                 <input type="file" class="form-control" name="image3" value="{{ old('image3') }}">
 
-                 <label for="name" class="p-2 mt-3">Image supplémentaire 3: </label>
+                 <label for="name" class="p-2 mt-3">{{ $action }} l'image supplémentaire 3: </label>
                   @error('image4')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror

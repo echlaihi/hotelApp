@@ -1,5 +1,6 @@
 @extends("admin.dashboard.layouts.app")
 
+@section("title", "Clients")
 @section("content")
 
 

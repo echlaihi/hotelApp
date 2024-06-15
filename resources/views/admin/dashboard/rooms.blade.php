@@ -1,5 +1,7 @@
 @extends("admin.dashboard.layouts.app")
 
+@section("title", 'Chambres')
+
 @section("content")
 
  <div class="card p-0 mb-5 ">

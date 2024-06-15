@@ -1,5 +1,6 @@
 @extends("admin.dashboard.layouts.app")
 
+@section("title", "")
 @section("content")
 <div class="card ">
                 <div class="card-header m-0">
@@ -22,20 +23,13 @@
                             {{ $num_rooms }}
                           </div>
 
-                          <div class="col-sm-2 col-xs-5 well">
+                          <div class="col-sm-2 col-xs-5 well p-3">
                             <h1><i class="fa-regular fa-note-sticky"></i></h1>
                             <h4>Réservations</h4>
                             {{ $num_reservations }}
                             
                           </div>
 
-
-                          <div class="col-sm-2 col-xs-5 well p-3">
-                            <h1><i class="fa-solid fa-bell"></i></h1>
-                            <h4>Notifications not created yeat</h4>
-
-                            23
-                          </div>
 
 
 
