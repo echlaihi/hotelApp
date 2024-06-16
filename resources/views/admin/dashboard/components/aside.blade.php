@@ -87,12 +87,10 @@
 
 
       <li class="pl-5 nav-link link-body-emphasis">
-        {{-- <a href="{{ route("room.index") }}" class="nav-link link-body-emphasis"> --}}
             <form action="{{ route('logout') }}" method="POST">
               @csrf
               <button class="btn d-inline-flex align-items-center rounded border-0">Se déconnecter</button>
             </form>
-        {{-- </a> --}}
       </li>
 
 

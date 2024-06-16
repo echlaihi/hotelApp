@@ -18,7 +18,7 @@ class ReservationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function an_authenticated_user_can_reserve_a_room_with_online_payment()
+    public function test_an_authenticated_user_can_reserve_a_room_with_online_payment()
     {
         $response = $this->authenticateUser();
         $url = "https://api.stripe.com/v1/tokens";
@@ -32,12 +32,12 @@ class ReservationTest extends TestCase
                 ];
 
         $response = Http::withHeaders([
-            "Authorization" => "Bearer " . env('STRIPE_SECRET'),
+            "Authorization" => "Bearer " . env('STRIPE_KEY'),
             "Content-Type" => "application/x-www-form-urlencoded",
 
         ])->post($url, $data);
 
-        // dd(json_decode($response));
+        dd(json_decode($response));
 
     }
 
@@ -125,7 +125,7 @@ class ReservationTest extends TestCase
         Storage::disk("contracts")->assertExists($reservation->marriage_contract);
 
         
-        $response = $response->delete(route("reservation.delete", 1));
+        $response = $response->delete(route("reservation.delete", $reservation->id));
         $this->assertDatabaseCount("reservations", 0);
         Storage::disk("contracts")->assertMissing($reservation->marriage_contract);
         // $this->assertFalse($exists);
@@ -140,6 +140,7 @@ class ReservationTest extends TestCase
         $response = $this->authenticateAdmin();
         $this->assertDatabaseCount('users', 2);
         $reservation = Reservation::first();
+
         $response = $response->delete(route('admin.reservation.delete', $reservation->id));
         $this->assertDatabaseCount("reservations", 0);
         Storage::disk("contracts")->assertMissing($reservation->marriage_contract);
