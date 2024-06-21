@@ -15,7 +15,7 @@ class ReservationController extends Controller
 
 	public function make(Room $room, Request $request)
 	{
-		if (!$room->is_available) abort(404);
+		if (!$room->is_available || !$this->checkReserved($room)) abort(404);
 
 		if ($room->type == 'single') $this->reserveSingle($room, $request);
 		else if ($room->type == 'double' || $room->type == 'triple') $this->reserveDoubleTriple($room, $request);
@@ -61,7 +61,7 @@ class ReservationController extends Controller
 			"start_date" => $validated_data["start_date"],
 			"end_date"   => $validated_data["end_date"],
 			"room_id"    => $room->id,
-			"status"	 => "disactive",
+			"status"	 => "désactivée",
 			"partner_id" => null,
 			"invoice"  	 => ($num_days * $room->price), 
 			
@@ -112,7 +112,7 @@ class ReservationController extends Controller
 			'user_id'    => Auth::user()->id,
 			'partner_id' => $partner->id,
 			'room_id'    => $room->id,
-			'status' 	 => 'disactive',
+			'status' 	 => 'désactivée',
 			'marriage_contract' => $contract_name,
 			"invoice" 	=> ($num_days * $room->price),
 			
@@ -128,7 +128,12 @@ class ReservationController extends Controller
 	{	
 		if ((Auth::user()->id != $reservation->user_id)) if(!Auth::user()->is_admin) abort(404);
 
-		if (isset($reservation->marriage_contract)) unlink('storage/app/contracts/' . $reservation->marriage_contract);
+		if (isset($reservation->marriage_contract)){
+			$exists = Storage::disk("contracts")->exists($reservation->marriage_contract);
+			if ($exists)
+			Storage::delete($reservation->marriage_contract);
+		}
+			
 		$reservation->delete();
 
 		$request->session()->flash("status", "Réservation supprimée");
@@ -143,5 +148,20 @@ class ReservationController extends Controller
 		$request->session()->flash("status", "Réservation modifiée");
 
 		return redirect()->back();
+	}
+
+	public function checkReserved($room)
+	{
+		$user_id = Auth()->user()->id;
+		$room_id = $room->id;
+
+		$reservations = Reservation::all();
+		if(!count($reservations)) return false;
+
+		foreach($reservations as $reservation) {
+			if ( $reservation->room_id == $room_id && $reservation->user_id == $user_id ) return true;
+		}
+
+		return false;
 	}
 }

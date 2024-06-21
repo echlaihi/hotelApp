@@ -81,17 +81,26 @@
 
                 <fieldset class="mt-3">
                      <label class="m-1">récepteur</label>
+                     @error('reciever')
+                         <div class="alert alert-danger">{{ $message }}</div>
+                     @enderror
                     <input  class="form-control" type="text" name="receiver">
                     <input type="hidden" name="sender" value="{{ env('MAIL_FROM_ADDRESS') }}">
                 </fieldset>
 
                 <fieldset class="mt-3">
                      <label class="m-1">Titre de votre message</label>
+                      @error('title')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     <input  class="form-control" type="text" name="title">
                 </fieldset>
 
                 <fieldset class="mt-3">
                      <label class="m-1">Votre message</label>
+                      @error('body')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     <textarea class="form-control" rows="7" name="body"></textarea>
                 </fieldset> 
 

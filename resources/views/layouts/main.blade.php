@@ -63,7 +63,7 @@
     <script src="{{ asset('js/main.js') }}"></script> --}}
 
      <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
-     <script src="https://kit.fontawesome.com/99d030ebb4.js" crossorigin="anonymous"></script>
+     {{-- <script src="https://kit.fontawesome.com/99d030ebb4.js" crossorigin="anonymous"></script> --}}
     <script src="{{ asset('js/app.js') }}"></script>
     
 </body>

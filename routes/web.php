@@ -10,8 +10,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Models\Reservation;
 use App\Models\Room;
+use Illuminate\Http\Request;
 
 Route::get('/dashboard', [DashboardController::class, 'getUserDashboard'])->middleware(['auth', 'verified'])->name('user.dashboard');
+
+Route::delete('/dashboard/users/{user}/delete', [UserController::class, 'delete'])->middleware(['auth', checkAdminMiddlware::class])->name('user.delete');
 
 Route::get('/admin/dashboard', [DashboardController::class, 'getAdminDashboard'])->middleware(['auth', 'verified',checkAdminMiddlware::class])->name('admin.dashboard');
 
@@ -64,7 +67,24 @@ Route::put('/api/message/{message}/read', [MessageController::class, 'read'])->n
 
 // Reservation routes
 Route::post('/rooms/reservation/{room}', [ReservationController::class, 'make'])->middleware(['auth'])->name("reservation.make");
+
 Route::delete('/dashboard/reservation/{reservation}', [ReservationController::class, 'delete'])->middleware(['auth'])->name('reservation.delete');
+
+Route::get('/checkout', function (Request $request) {
+    $stripePriceId = 'price_deluxe_album';
+
+    $quantity = 1;
+
+    return $request->user()->checkout([$stripePriceId => $quantity], [
+        'success_url' => route('checkout-success'),
+        'cancel_url' => route('checkout-cancel'),
+    ]);
+})->name('checkout');
+
+Route::view('/checkout/success', function(){dd("success"); })->name('checkout-success');
+Route::view('/checkout/cancel', function(){dd('cancel'); })->name('checkout-cancel');
+
+
 
 
 

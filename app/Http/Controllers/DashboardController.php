@@ -14,9 +14,9 @@ class DashboardController extends Controller
 {
     public function getUserDashboard()
     {
-        $reservations = Auth::user()->reservations()->where("status", "disactive")->get();
+        $reservations = Auth::user()->reservations()->get();
         foreach ($reservations as $reservation) {
-            $reservation->partner =  Partner::find($reservation->partner_id) ??   null;
+            $reservation->partner =  Partner::find($reservation->partner_id) ?? null;
         }
 
         return view('dashboard', [

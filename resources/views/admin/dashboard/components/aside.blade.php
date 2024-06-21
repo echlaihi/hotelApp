@@ -17,6 +17,14 @@
           Overview
         </a>
       </li>
+
+       <li>
+        <a href="{{ route("admin.reservations.list") }}" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+          Réservations
+        </a>
+      </li>
+
       <li>
         <a href="{{ route("admin.users.list") }}" class="nav-link link-body-emphasis">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>

@@ -107,7 +107,9 @@
                                     <td>{{ $reservation->status }}</td>
                                     <td><button data="{{ $reservation->marriage_contract }}" class="marriageBtn btn btn-sm btn-info">voir contract de marriage</button></td>
                                     <td class="d-flex">
-                                        <form  class="mx-1" action="#">
+                                        <form  class="mx-1" action="{{ route("admin.reservation.delete", $reservation->id) }}" method="POST">
+                                            @csrf
+                                            @method("DELETE")
                                             <button class="btn btn-sm btn-danger">supprimer</button>
                                         </form>
 

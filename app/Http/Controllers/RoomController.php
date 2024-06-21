@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\Image;
+use App\Models\Reservation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\File;
@@ -15,7 +16,7 @@ class RoomController extends Controller
 {
     public function index()
     {
-        $rooms = Room::all();
+        $rooms = Room::where("is_available", true)->get();
         foreach ($rooms as $room) {
             $room->initial_image = $room->images()->where("is_initial", true)->get()[0];
         }
@@ -102,11 +103,13 @@ class RoomController extends Controller
 
     public function delete(Request $request, Room $room)
     {
+        $reservation = Reservation::where("room_id", $room->id)->first();
+        if(isset($reservation)) return abort(404);
+        
         $room_id = $room->id;
 
         Image::where("room_id", $room_id)->delete();
         $room->delete();
-
         $request->session()->flash("status", "La chambre a été supprimée avec succès.");
         return to_route("admin.rooms.list");
     }

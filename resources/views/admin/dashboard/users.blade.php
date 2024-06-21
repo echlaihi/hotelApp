@@ -50,7 +50,6 @@
                             <th>Nom</th>
                               <th>Email</th>
                               <th>Membre depuis</th>
-                              {{-- <th>Outils de comfort</th>--}}
                               <th>Action</th> 
                         </tr>
                   </thead>
@@ -62,21 +61,19 @@
                                     <td>{{ $user->last_name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->created_at->diffForHumans() }}</td>
-                                    {{-- <td>{{ $user->conforts }}</td> --}}
                                     <td>
 
-                                          {{-- <form  class="d-inline" action="{{ route('profile.destroy', $user->id) }}" 
+                                          <form  class="d-inline" action="{{ route('user.delete', $user->id) }}" 
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 
                                           <button onclick="
-                                                if (confirm('Est ce que vous etre sur?')){
+                                                if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur {{ $user->first_name . ' ' . $user->last_name }}')){
                                                       form.submit();
                                                 }
                                           " class="btn btn-sm btn-danger">Supprimer</button>
-                                          </form> --}}
-                                          actions
+                                          </form>
                                          
                                     </td>
                               </tr>
