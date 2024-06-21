@@ -14,5 +14,3 @@
 # Création des chambres
 Après avoir créé l'utilisateur, vous devez créer des chambres en utilisant le compte administrateur. Utilisez les images disponibles à cette URL :
 https://github.com/echlaihi/images_pfe
-
----
