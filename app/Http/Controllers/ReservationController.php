@@ -14,12 +14,11 @@ class ReservationController extends Controller
 {
 
 	public function make(Room $room, Request $request)
-	{
-		if (!$room->is_available || !$this->checkReserved($room)) abort(404);
+	{	
+		if (!$room->is_available) abort(404);
 
 		if ($room->type == 'single') $this->reserveSingle($room, $request);
 		else if ($room->type == 'double' || $room->type == 'triple') $this->reserveDoubleTriple($room, $request);
-		else abort(404);
 
 		$request->session()->flash("status", "le chambre est reserver");
 		return redirect()->route("user.dashboard");
@@ -131,7 +130,7 @@ class ReservationController extends Controller
 		if (isset($reservation->marriage_contract)){
 			$exists = Storage::disk("contracts")->exists($reservation->marriage_contract);
 			if ($exists)
-			Storage::delete($reservation->marriage_contract);
+			Storage::disk("contracts")->delete($reservation->marriage_contract);
 		}
 			
 		$reservation->delete();

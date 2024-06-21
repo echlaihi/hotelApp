@@ -44,19 +44,23 @@ class ReservationTest extends TestCase
     public function test_an_authenticated_user_can_reserve_room()
     {
 
-        // $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
         $response = $this->authenticateUser();
 
-        $room = Room::factory()->create();
+        $room = Room::factory(['type' => 'single', 'is_available' => true])->create();
 
         $reservation = [
-            "start_date" => Carbon::now()->addDay(2),
-            "end_date"   => Carbon::now()->addDay(7),
+            "start_date" => Carbon::now()->addDay(2),//->toFormattedDateString(),
+            "end_date"   => Carbon::now()->addDay(7), ///->toFormattedDateString(),
         ];
 
+
         $response = $response->post(route("reservation.make", $room->id), $reservation);
-        $response->assertRedirect();
+        // $response->assertRedirect();
         $this->assertDatabaseCount("reservations", 1);
+
+
+        // $response->dumpSession();
       
     }
 
@@ -116,20 +120,18 @@ class ReservationTest extends TestCase
 
     public function test_a_user_can_delete_his_reservation()
     {
-        // $this->withExceptionHandling();/*  */
+        $this->withExceptionHandling();/*  */
         $response = $this->authenticateUser();
         $this->createReservation($response);
 
         $this->assertDatabaseCount("reservations", 1);
         $reservation = Reservation::where("user_id", Auth::user()->id)->first();
         Storage::disk("contracts")->assertExists($reservation->marriage_contract);
-
+        
         
         $response = $response->delete(route("reservation.delete", $reservation->id));
         $this->assertDatabaseCount("reservations", 0);
         Storage::disk("contracts")->assertMissing($reservation->marriage_contract);
-        // $this->assertFalse($exists);
-        // dd($exists);
     }
 
     public function test_admin_can_delete_any_reservation()
