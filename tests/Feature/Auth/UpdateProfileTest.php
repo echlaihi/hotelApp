@@ -35,7 +35,7 @@ class UpdateProfileTest extends TestCase
 
         public function test_user_can_update_his_password()
         {
-			$this->withoutExceptionHandling();
+			$this->withExceptionHandling();
         	$user = [
         		"first_name"            => "test first",
         		"last_name"             => "test last",
@@ -45,21 +45,18 @@ class UpdateProfileTest extends TestCase
         		"cin" 		            => "idfas9k"
         	];
         	$response = $this->post(route("register"), $user);
-			$response->assertRedirect(route("user.dashboard", absolute: false));
-			// dd(User::first()->first_name, User::first()->last_name, User::first()->email, User::first()->cin, User::first()->password);
-        	// $this->assertAuthenticated();
+			$response->assertRedirect(route("user.dashboard"));
+        	$this->assertAuthenticated();
 
         	$passwords = [
         		"current_password" => "password1",
         		"password"		   => "newpassword",
+				"password_confirmation" => "newpassword"
         	];
 
-        	$this->post(route("logout"));
-        	$this->put(route("password.update"), $passwords);
-        	$this->assertGuest();
+        	$response = $this->put(route("password.update"), $passwords);
 
 			$this->get(route('login'), ['email' => $user['email'], 'password' => $passwords['password']]);
-
 			$this->assertAuthenticated();
 
 

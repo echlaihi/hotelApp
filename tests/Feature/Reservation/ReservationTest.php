@@ -18,7 +18,7 @@ class ReservationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_an_authenticated_user_can_reserve_a_room_with_online_payment()
+    public function an_authenticated_user_can_reserve_a_room_with_online_payment()
     {
         $response = $this->authenticateUser();
         $url = "https://api.stripe.com/v1/tokens";
