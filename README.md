@@ -5,7 +5,7 @@
 # Pour exécuter ce code sur votre machine :
 1. Vérifiez que vous avez installé Composer.
 2. Exécutez la commande suivante : `composer install`.
-3. Créez une base de données nommée `hotelApp`.
+3. Créez une base de données nommée `hotel`.
 4. Renommez le fichier `.env.example` en `.env`.
 5. Exécutez la commande `php artisan migrate` pour la création des tables.
 6. Enregistrez un utilisateur avec l'email `admin@email.com`.

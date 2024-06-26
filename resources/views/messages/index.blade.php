@@ -26,7 +26,7 @@
 
                           @endforeach
 
-                          {{ $messags->links() }}
+                          {{ $messages->links() }}
 
                         @else
                             <div class="alert alert-danger">Auncun message {{ $type }}</div>
